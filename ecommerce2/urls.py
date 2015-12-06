@@ -4,7 +4,9 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from dashing.utils import router
 from registration.backends.default.views import RegistrationView
+from ajaxuploader.views import AjaxFileUploader
 
+uploader = AjaxFileUploader()
 
 urlpatterns = [
     # Examples:
@@ -12,6 +14,7 @@ urlpatterns = [
     url(r'^messages/', include('django_messages.urls')),
     #url(r'^$', 'newsletter.views.home', name='home'),
     url(r'^contact/$', 'newsletter.views.contact', name='contact'),
+    #url(r'^history/$', 'products.views.post_list', name='post_list'),
     url(r'^about/$', 'ecommerce2.views.about', name='about'),
     url(r'^blank/$', 'ecommerce2.views.blank', name='blank'),  
     url(r'^faq/$', 'ecommerce2.views.faq', name='faq'),
@@ -27,6 +30,13 @@ urlpatterns = [
     url(r'^products/', include('products.urls')),
     # Django JET URLS
     url(r'^jet/', include('jet.urls', 'jet')), 
+    ##############
+    url(r'^products/products/add/$', 'products.views.image_upload', name='add_image'),
+    url(r'^helper/ajax-upload/$', uploader, name="ajax_uploader"),
+    url(r'^media/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}, name="media_url"),
+    url(r'^products/$', 'products.views.image_list', name='image_list'),
+    url(r'^products/(?P<image_id>\d*)/$', 'products.views.image_upload', name='change_image'),
+    
 
 ]
 

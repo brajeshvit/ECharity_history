@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models.signals import post_save
 from django.utils.text import slugify
 from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 # Create your models here.
 
 class ProductManager (models.Manager):
@@ -14,6 +16,7 @@ class ProductManager (models.Manager):
 
 
 class Product(models.Model):
+    user = models.ForeignKey(User)
     title  = models.CharField(max_length=120)
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=10)
@@ -71,6 +74,23 @@ class ProductQuerySet(models.query.QuerySet):
         return self.filter(active=True)
 
 
+def upload_to(instance, filename):
+    return '/'.join(['products', unicode(instance.pk), filename])
+
+
+class ProductImage(models.Model):
+    #user = models.ForeignKey(User)
+    title = models.ForeignKey(Product)
+    image = models.ImageField(_("ProductImage"), upload_to=upload_to)
+
+    class Meta:
+        verbose_name = _("ProductImage")
+        verbose_name_plural = _("products")
+        ordering = ("image",)
+
+    def __unicode__(self):
+        return self.image.path
+
 
 
 
@@ -85,13 +105,7 @@ def image_upload_to(instance, filename):
     return "product/%s/%s" %(slug, new_filename)
 
 #product Image
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product)
-    image = models.ImageField(upload_to=image_upload_to)
-    
 
-    def get_absolute_url(self):
-        return self.product.title()
 
 class Slider(models.Model):
 	image = models.ImageField(upload_to=image_upload_to)

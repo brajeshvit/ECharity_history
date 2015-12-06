@@ -93,7 +93,7 @@ background:#00CC99;
                         <a href="{% url 'dashboard' %} "><i class="fa fa-desktop fa-3x"></i> GIVE UP</a>
                     </li>                   
 			  <li  >
-                       <a href="{% url 'dashboard' %} "><i class="fa fa-bar-chart-o fa-3x"></i> HISTORY</a>
+                       <a href="{% url 'post_list' %} "><i class="fa fa-bar-chart-o fa-3x"></i> HISTORY</a>
                     </li>	
                       <li>
 			<a href="{% url 'messages_inbox' %} "><i class="fa fa-table fa-3x"></i> ADDRESS</a>
@@ -112,7 +112,7 @@ background:#00CC99;
                 <div class="row">
                     <div class="col-md-12">
                      <h1>Dashboard</h1>   
-                        <h3>Welcome  <u><b>{{ request.user.username }}</b></u> to see you back. </h3>
+                        <h3>Welcome  <u><b>{{ request.user.id }}</b></u> to see you back. </h3>
                     </div>
                  </div>            
                  <!-- /. ROW  -->

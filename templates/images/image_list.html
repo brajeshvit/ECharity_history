@@ -1,0 +1,19 @@
+
+
+
+
+
+    
+    <p>
+	<h1>{{	request.user.name }}</h1>
+        {% for instance in images %}
+           {% load staticfiles %}
+          
+            <a href="{% url "change_image" image_id=instance.pk %}">
+                <img src="{% static instance.image %}" alt="My image"/>
+
+            </a>
+        {% endfor %}
+    </p>
+    
+

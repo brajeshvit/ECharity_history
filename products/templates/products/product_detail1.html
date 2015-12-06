@@ -7,6 +7,8 @@
 
 
     <div class='col-sm-8'>
+		<a href="{% url "add_image" %}"> UploadImage </a>
+		
 		<u><h1><lable>Title</lable></h1></u>
          <h2 style="color:brown;">{{ post.title }}</h2>
          {% if post.productimage_set.count > 0 %}
